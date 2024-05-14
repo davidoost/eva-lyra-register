@@ -1,6 +1,5 @@
 import callEvaService from "@/utils/call-eva-service";
 import { Text, Card, IconBadge } from "@/utils/lyra";
-import Barcode from "react-barcode";
 import CustomerBarcode from "@/components/barcode";
 
 export default async function Success() {

@@ -1,13 +1,23 @@
-import { cookies } from "next/headers";
-import callEvaService from "./utils/call-eva-service";
-import validateToken from "./utils/validate-token";
+import { NextResponse, NextRequest } from "next/server";
+import validateToken from "./utils/middleware/validate-token";
 
-export async function middleware() {
-  const authToken = cookies().get("EVA-Auth-Token");
+export default async function middleware(request: NextRequest) {
+  console.log("middleware ran for", request.nextUrl.pathname);
+  const response = NextResponse.next();
+  const authToken = request.cookies.get("EVA-Auth-Token");
   if (authToken) {
-    const tokenValidity = await validateToken();
-    console.log(tokenValidity);
+    const isTokenValid = await validateToken(authToken.value);
+    if (!isTokenValid) {
+      response.cookies.delete("EVA-Auth-Token");
+      console.log("auth token deleted");
+      if (request.nextUrl.pathname != "/") {
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+    } else if (request.nextUrl.pathname == "/") {
+      return NextResponse.redirect(new URL("/success", request.url));
+    }
   }
+  return response;
 }
 
 export const config = {
