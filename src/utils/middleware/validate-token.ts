@@ -1,3 +1,5 @@
+// function to check with EVA if an authorization token is (still) valid
+
 export default async function validateToken(token: string) {
   const headers = {
     "EVA-User-Agent": "DavidTest/1.0",

@@ -1,8 +1,6 @@
 import { cookies } from "next/headers";
 
-// GET ENV variables
-
-// Check if authToken and add if it exists
+// function to call EVA services
 
 export default async function callEvaService(service: string, data: any) {
   const OU = process.env.EVA_REQUESTED_OU!;
@@ -24,8 +22,7 @@ export default async function callEvaService(service: string, data: any) {
   const res = await fetch(`${ENDPOINT}/message/${service}`, {
     headers: headers,
     method: "POST",
-    body: JSON.stringify(data), // Ensure data is correctly stringified
-    cache: "no-cache",
+    body: JSON.stringify(data),
   });
   if (!res.ok) {
     console.error(`Error calling ${service}: ${res}`);

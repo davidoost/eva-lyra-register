@@ -1,5 +1,7 @@
 "use server";
 
+// function to register customers and optionally return errors as search params
+
 import { redirect } from "next/navigation";
 import callEvaService from "./call-eva-service";
 import { z } from "zod";
