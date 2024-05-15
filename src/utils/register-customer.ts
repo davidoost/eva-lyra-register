@@ -12,21 +12,40 @@ const schema = z.object({
   EmailAddress: z.string().email(),
   FirstName: z.string(),
   LastName: z.string(),
+  PreferredStoreID: z.string().optional(),
 });
 
 export default async function registerCustomer(formData: FormData) {
   const form = Object.fromEntries(formData);
 
+  console.log("test1");
+
   const { data, error, success } = schema.safeParse(form);
+  const orderAppToken = formData.get("OrderAppToken") as string;
+  const orderId = formData.get("OrderID") as string;
+
+  console.log("test2");
+
   if (!success) {
     const zodError = parseZodFormErrors(error);
+    console.log(zodError);
     return zodError;
   }
 
-  const res = await callEvaService("CreateCustomer", {
-    User: { ...data },
-    AutoLogin: true,
-  });
+  console.log("test3");
+
+  const res = await callEvaService(
+    "CreateCustomer",
+    {
+      User: { ...data },
+      AutoLogin: true,
+      OrderID: orderId,
+      AttachToOrder: true,
+    },
+    orderAppToken ? orderAppToken : null
+  );
+
+  console.log("test4");
 
   switch (res.Result) {
     case 1:

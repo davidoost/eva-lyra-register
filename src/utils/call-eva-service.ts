@@ -2,7 +2,11 @@ import { cookies } from "next/headers";
 
 // function to call EVA services
 
-export default async function callEvaService(service: string, data: any) {
+export default async function callEvaService(
+  service: string,
+  data: any,
+  orderAppToken: string | null
+) {
   const OU = process.env.EVA_REQUESTED_OU!;
   const ENDPOINT = process.env.EVA_ENDPOINT!;
   const authToken = cookies().get("EVA-Auth-Token");
@@ -17,6 +21,9 @@ export default async function callEvaService(service: string, data: any) {
     if (service == "ValidateToken") {
       headers["Authorization"] = `eva ${authToken.value}`;
     } else headers["Authorization"] = `${authToken.value}`;
+  }
+  if (orderAppToken) {
+    headers["EVA-App-Token"] = orderAppToken;
   }
 
   const res = await fetch(`${ENDPOINT}/message/${service}`, {

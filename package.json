@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@new-black/lyra": "^1.0.2",
+    "@new-black/lyra": "^1.0.4",
     "next": "14.2.3",
     "react": "^18",
     "react-barcode": "^1.5.1",

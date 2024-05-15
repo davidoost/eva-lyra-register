@@ -3,13 +3,13 @@ import { Text, Card, IconBadge } from "@/utils/lyra";
 import CustomerBarcode from "@/components/barcode";
 
 export default async function Success() {
-  const currentUser = await callEvaService("getCurrentUser", {});
+  const currentUser = await callEvaService("getCurrentUser", {}, null);
   return (
     <div className="flex w-full flex-col items-center justify-center gap-4">
       <Text variant="display">Success</Text>
       <Card
         variant="primary"
-        className="flex flex-col items-center w-full max-w-xl p-4 gap-4"
+        className="flex flex-col items-center w-full max-w-lg p-4 gap-4"
       >
         <IconBadge name="verified-checkmark" size="xl" variant="green" />
         <Text variant="heading-1">Hi {currentUser.User.FirstName},</Text>

@@ -54,9 +54,15 @@ export default async function RenderInput({
           isRequired={isRequired}
           orientation="horizontal"
         >
-          <Checkbox value="M">Male</Checkbox>
-          <Checkbox value="F">Female</Checkbox>
-          <Checkbox value="O">Other</Checkbox>
+          <Checkbox key="m" value="M">
+            Male
+          </Checkbox>
+          <Checkbox key="f" value="F">
+            Female
+          </Checkbox>
+          <Checkbox key="o" value="O">
+            Other
+          </Checkbox>
         </CheckboxGroup>
       );
     case "PhoneNumber":
@@ -71,9 +77,13 @@ export default async function RenderInput({
       );
 
     case "CountryID":
-      const countries = await callEvaService("ListCountries", {
-        FetchAll: true,
-      });
+      const countries = await callEvaService(
+        "ListCountries",
+        {
+          FetchAll: true,
+        },
+        null
+      );
       const countryList: ICountry[] = countries.Result;
       return <CountrySelectField key={name} countries={countryList} />;
     default:
